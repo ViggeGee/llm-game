@@ -1,4 +1,5 @@
 using LLMUnity;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI; // Include Unity UI for user input
@@ -9,7 +10,9 @@ public class ChatBox : MonoBehaviour
     public LLMCharacter llmCharacter;
     public InputField userInputField; // UI Input Field for the user to type their message
     public TMP_Text responseText; // UI Text to display the response
+    public TMP_Text moneyText; // UI Text to display the response
     public AudioSource voice;
+    int income = 0;
 
     private void Start()
     {
@@ -33,9 +36,24 @@ public class ChatBox : MonoBehaviour
         }
         if (oldMsg != newMsg)
         {
-            voice.pitch = Random.Range(0.6f, 0.8f);
+            voice.pitch = Random.Range(1f, 1.3f);
             if (!voice.isPlaying)
                 voice.Play();
+        }
+
+        MatchCollection matches = Regex.Matches(newMsg, @"\bpays\s?\$?(\d+)\$?\b");
+
+        foreach (Match match in matches)
+        {
+            if (match.Groups.Count > 1)
+            {
+                int amount = int.Parse(match.Groups[1].Value); // Extract the number and convert to integer
+                income += amount; // Add the amount to income
+                moneyText.text = income.ToString() + "$";
+                Debug.Log("Amount paid: " + amount + "$. Total income: " + income + "$");
+
+                break;
+            }
         }
 
     }
