@@ -1,0 +1,57 @@
+farmer
+artist
+programmer
+musician
+chef
+teacher
+doctor
+engineer
+carpenter
+actor
+writer
+journalist
+scientist
+detective
+soldier
+firefighter
+nurse
+librarian
+baker
+photographer
+pilot
+driver
+mechanic
+blacksmith
+barista
+waiter
+bartender
+game developer
+graphic designer
+web developer
+content creator
+fitness trainer
+politician
+sailor
+pirate
+miner
+astronaut
+gardener
+butcher
+tailor
+potter
+calligrapher
+archaeologist
+zookeeper
+beekeeper
+fisherman
+hunter
+shoemaker
+weaver
+glassblower
+tattoo artist
+model
+tour guide
+paramedic
+private investigator
+spy
+comedian

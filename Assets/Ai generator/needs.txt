@@ -1,0 +1,100 @@
+a sword
+a shield
+a map
+a compass
+a backpack
+a lantern
+a rope
+a key
+a coin
+a gem
+a ring
+a necklace
+a crown
+a staff
+a potion
+a book
+a scroll
+a helmet
+a dagger
+a bow
+an arrow
+a quiver
+a helmet
+a chestplate
+a gauntlet
+a pair of boots
+a torch
+a candle
+a bucket
+a spade
+a rake
+a fishing rod
+a net
+a trap
+a flask
+a cup
+a plate
+a fork
+a spoon
+a knife
+a bowl
+a tent
+a blanket
+a pillow
+a sleeping bag
+a water bottle
+a canteen
+a pouch
+a satchel
+a belt
+a pair of gloves
+a scarf
+a hat
+a mask
+a pair of goggles
+a pair of scissors
+a needle
+a spool of thread
+a hammer
+a chisel
+a wrench
+a screwdriver
+a nail
+a bolt
+a plank
+a stone
+a brick
+a piece of cloth
+a canvas
+a paintbrush
+a hammer
+a saw
+a shovel
+a pickaxe
+a lantern
+a candle
+a broom
+a mop
+a bucket of water
+a crate
+a barrel
+a bag of flour
+a sack of grain
+a basket of fruit
+a jar of honey
+a loaf of bread
+a wheel of cheese
+a bottle of wine
+a jug of milk
+a slab of meat
+a fish
+a bundle of herbs
+a bundle of sticks
+a log
+a piece of charcoal
+a lantern oil
+a bucket of nails
+a piece of parchment
+a feather pen
+an inkwell

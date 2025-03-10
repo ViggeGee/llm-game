@@ -26,7 +26,7 @@ public class ChatBox : MonoBehaviour
         string oldMsg = responseText.text;
         // Display the LLM's response in the UI Text
         responseText.text = "LLM says: " + reply;
-        Debug.Log("LLM says: " + reply);
+        Debug.Log(llmCharacter.AIName + " says: " + reply);
 
         string newMsg = responseText.text;
 
