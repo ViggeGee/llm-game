@@ -33,6 +33,21 @@ public class ChatBox : MonoBehaviour
         if (oldMsg == newMsg)
         {
             voice.loop = false;
+
+            MatchCollection matches = Regex.Matches(newMsg, @"\*.*?(\d+)\b");
+
+            foreach (Match match in matches)
+            {
+                if (match.Groups.Count > 1)
+                {
+                    int amount = int.Parse(match.Groups[1].Value); // Extract the number and convert to integer
+                    income += amount; // Add the amount to income
+                    moneyText.text = income.ToString() + "$";
+                    Debug.Log("Amount paid: " + amount + "$. Total income: " + income + "$");
+
+                    return;
+                }
+            }
         }
         if (oldMsg != newMsg)
         {
@@ -41,20 +56,7 @@ public class ChatBox : MonoBehaviour
                 voice.Play();
         }
 
-        MatchCollection matches = Regex.Matches(newMsg, @"\bpays\s?\$?(\d+)\$?\b");
-
-        foreach (Match match in matches)
-        {
-            if (match.Groups.Count > 1)
-            {
-                int amount = int.Parse(match.Groups[1].Value); // Extract the number and convert to integer
-                income += amount; // Add the amount to income
-                moneyText.text = income.ToString() + "$";
-                Debug.Log("Amount paid: " + amount + "$. Total income: " + income + "$");
-
-                break;
-            }
-        }
+        
 
     }
 
