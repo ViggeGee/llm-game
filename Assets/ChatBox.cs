@@ -33,7 +33,8 @@ public class ChatBox : MonoBehaviour
         {
             voice.loop = false;
 
-            MatchCollection matches = Regex.Matches(newMsg, @"\*.*?(\d+)\b");
+            MatchCollection matches = Regex.Matches(newMsg, @"pays\s*\$?(\d+)[\W$]*");
+
 
             foreach (Match match in matches)
             {
