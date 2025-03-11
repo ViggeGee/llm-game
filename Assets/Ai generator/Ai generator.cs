@@ -23,7 +23,7 @@ public class Aigenerator : MonoBehaviour
     [SerializeField] private int age;
 
     [SerializeField] string prompt;
-    [SerializeField] TextMeshProUGUI computerText;
+    [SerializeField] public TextMeshProUGUI computerText;
 
     [SerializeField] LLMCharacter character;
 
@@ -48,10 +48,14 @@ public class Aigenerator : MonoBehaviour
         interest = interests[Random.Range(0, interests.Length)];
         occupation = occupations[Random.Range(0, occupations.Length)];
 
-        prompt = "this is your character: Your name is " + characterName + ". You are " + age + " years old. You like " + interest + ". You are a " + occupation + " and you need " + need + ".  You are pretty easily convinced and persuaded. Now lets finally play";
-        computerText.text = "Name: " + characterName + " | Age: " + age + "\r\nOccupation: " + occupation + "\r\nHobby: " + interest + "\r\nNeed: " + need;
+        prompt = "this is your character: Your name is " + characterName + ". You are " + age + " years old. You like " + interest + ". You are a " + occupation + " and you need " + need + ".  These are your traits: You are pretty easily convinced and persuaded. Now the player will call you on your phone, and the next message you recieve is from the player. Write I understand. if you understand";
+        computerText.text = "Name: " + characterName + "\r\nAge: " + age + "\r\nOccupation: " + occupation + "\r\nHobby: " + interest + "\r\nNeed: " + need;
+    }
 
-        character.prompt += prompt;
+    public void LoadCharacter()
+    {
+        _ = character.Chat(prompt, HandleReply);
+        //character.prompt += prompt;
         character.AIName = characterName;
     }
 
@@ -66,5 +70,10 @@ public class Aigenerator : MonoBehaviour
             Debug.LogError("File not found: " + filePath);
             return new string[0];
         }
+    }
+
+    private void HandleReply(string reply)
+    {
+        Debug.Log(character.AIName + " says: " + reply);
     }
 }

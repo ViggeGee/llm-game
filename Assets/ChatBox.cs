@@ -8,7 +8,7 @@ using UnityEngine.Windows.Speech;
 public class ChatBox : MonoBehaviour
 {
     public LLMCharacter llmCharacter;
-    public InputField userInputField; // UI Input Field for the user to type their message
+    public TMP_InputField userInputField; // UI Input Field for the user to type their message
     public TMP_Text responseText; // UI Text to display the response
     public TMP_Text moneyText; // UI Text to display the response
     public AudioSource voice;
@@ -25,8 +25,7 @@ public class ChatBox : MonoBehaviour
     {
         string oldMsg = responseText.text;
         // Display the LLM's response in the UI Text
-        responseText.text = "LLM says: " + reply;
-        Debug.Log(llmCharacter.AIName + " says: " + reply);
+        responseText.text = llmCharacter.AIName + " says: " + reply;
 
         string newMsg = responseText.text;
 
