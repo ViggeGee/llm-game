@@ -21,6 +21,7 @@ public class Aigenerator : MonoBehaviour
     [SerializeField] private string interest;
     [SerializeField] private string occupation;
     [SerializeField] private int age;
+    public bool finishedLoading = false;
 
     [SerializeField] string prompt;
     [SerializeField] public TextMeshProUGUI computerText;
@@ -54,7 +55,7 @@ public class Aigenerator : MonoBehaviour
 
     public void LoadCharacter()
     {
-        _ = character.Chat(prompt, HandleReply);
+        _ = character.Chat(prompt, WaitForCharacter);
         //character.prompt += prompt;
         character.AIName = characterName;
     }
@@ -72,8 +73,17 @@ public class Aigenerator : MonoBehaviour
         }
     }
 
-    private void HandleReply(string reply)
+    private void WaitForCharacter(string reply)
     {
-        Debug.Log(character.AIName + " says: " + reply);
+        string oldReply = reply;
+
+        Debug.Log(reply);
+
+        string newReply = reply;
+
+        if (oldReply == newReply && reply != "")
+        {
+            finishedLoading = true;
+        }
     }
 }
