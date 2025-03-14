@@ -13,11 +13,16 @@ public class ChatBox : MonoBehaviour
     public TMP_Text moneyText; // UI Text to display the response
     public AudioSource voice;
     int income = 0;
-
     private void Start()
     {
         // Optional: Add a listener to detect when the user presses enter or submits the input
         userInputField.onEndEdit.AddListener(OnSubmitMessage);
+    }
+
+    public void HandleDisconnect()
+    {
+        llmCharacter.ClearChat();
+        
     }
 
     // Handle the reply from the LLM
@@ -45,10 +50,27 @@ public class ChatBox : MonoBehaviour
                     moneyText.text = income.ToString() + "$";
                     Debug.Log("Amount paid: " + amount + "$. Total income: " + income + "$");
 
+                    HandleDisconnect();
+
                     return;
                 }
             }
+
+            // Regular Expression to check for the word "Decline" or "Declines" starting with *
+            string declinePattern = @"\*\s*(decline|declines)\s*[\W]*";
+            Match declineMatch = Regex.Match(reply, declinePattern, RegexOptions.IgnoreCase);
+
+            if (declineMatch.Success)
+            {
+                // Handle the decline logic here
+                responseText.text = "The action was declined.";
+
+                HandleDisconnect();
+
+                Debug.Log("Action was declined.");
+            }
         }
+
         if (oldMsg != newMsg)
         {
             voice.pitch = Random.Range(1f, 1.3f);
