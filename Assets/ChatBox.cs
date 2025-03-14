@@ -2,6 +2,8 @@ using LLMUnity;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Profiling;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI; // Include Unity UI for user input
 using UnityEngine.Windows.Speech;
 
@@ -13,6 +15,9 @@ public class ChatBox : MonoBehaviour
     public TMP_Text moneyText; // UI Text to display the response
     public AudioSource voice;
     int income = 0;
+
+    [SerializeField] GameObject windows;
+    [SerializeField] GameObject conversation;
     private void Start()
     {
         // Optional: Add a listener to detect when the user presses enter or submits the input
@@ -21,8 +26,17 @@ public class ChatBox : MonoBehaviour
 
     public void HandleDisconnect()
     {
-        llmCharacter.ClearChat();
-        
+        if (llmCharacter != null)
+        {
+            llmCharacter.CancelRequests(); // Cancel any pending requests
+            llmCharacter.ClearChat(); // Clear the chat history
+            llmCharacter.enabled = false; // Disable the LLMCharacter component
+            Debug.Log("Chat history saved, pending requests canceled, chat history cleared, and character disabled.");
+        }
+        // Reset the UI
+        windows.SetActive(true); // Show the profiles screen
+        conversation.SetActive(false); // Hide the conversation screen
+        Debug.Log("UI reset to default state.");
     }
 
     // Handle the reply from the LLM
@@ -95,5 +109,23 @@ public class ChatBox : MonoBehaviour
 
         // Optionally: Clear the input field after sending the message
         userInputField.text = "";
+    }
+
+    public void Cleanup()
+    {
+        if (llmCharacter != null)
+        {
+            llmCharacter.CancelRequests(); // Cancel any pending requests
+            llmCharacter.ClearChat(); // Clear the chat history
+            llmCharacter.enabled = false; // Disable the LLMCharacter component
+        }
+        Debug.Log("LLM resources cleaned up.");
+    }
+
+    private void OnApplicationQuit()
+    {
+
+        Cleanup();
+
     }
 }
