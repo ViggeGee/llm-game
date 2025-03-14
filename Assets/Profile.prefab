@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 2225714722820859695}
   - component: {fileID: 3473259488540302877}
   m_Layer: 5
-  m_Name: Profile 2 (2)
+  m_Name: Profile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -538,10 +538,9 @@ MonoBehaviour:
   interest: 
   occupation: 
   age: 0
-  finishedLoading: 0
-  prompt: 
   computerText: {fileID: 7131884842161066743}
   character: {fileID: 3473259488540302877}
+  finishedLoading: 0
 --- !u!114 &3473259488540302877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -549,7 +548,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7522105383492765661}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f6c87a428fd5d0be9bbc686bdc8c3c2, type: 3}
   m_Name: 
