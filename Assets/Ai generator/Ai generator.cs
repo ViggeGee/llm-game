@@ -39,6 +39,15 @@ public class Aigenerator : MonoBehaviour
 
     private void Start()
     {
+        GeneareNewAi();
+    }
+
+    public void GeneareNewAi()
+    {
+        //weird attempt to totally memory wipe the AI, not tested
+        character.enabled = false;
+        character.enabled = true;
+
         // Load character data from files
         names = LoadFromFile(namesFilePath);
         needs = LoadFromFile(needsFilePath);

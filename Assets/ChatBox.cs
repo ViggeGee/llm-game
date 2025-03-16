@@ -32,11 +32,14 @@ public class ChatBox : MonoBehaviour
             llmCharacter.ClearChat(); // Clear the chat history
             llmCharacter.enabled = false; // Disable the LLMCharacter component
             Debug.Log("Chat history saved, pending requests canceled, chat history cleared, and character disabled.");
+            llmCharacter.gameObject.GetComponent<Aigenerator>().GeneareNewAi();
         }
         // Reset the UI
         windows.SetActive(true); // Show the profiles screen
+        responseText.text = "";
         conversation.SetActive(false); // Hide the conversation screen
         Debug.Log("UI reset to default state.");
+
     }
 
     // Handle the reply from the LLM
@@ -87,7 +90,7 @@ public class ChatBox : MonoBehaviour
 
         if (oldMsg != newMsg)
         {
-            voice.pitch = Random.Range(1f, 1.3f);
+            voice.pitch = Random.Range(1.3f, 1.5f);
             if (!voice.isPlaying)
                 voice.Play();
         }
