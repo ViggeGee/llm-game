@@ -68,8 +68,8 @@ public class Aigenerator : MonoBehaviour
         }
 
         // Set the character prompt
-        prompt = "this is your character: Your name is " + characterName + ". You are " + age + " years old. You like " + interest + ". You are a " + occupation + " and you need " + need + ".  These are your traits: You are pretty easily convinced and persuaded. Now the player will call you on your phone, and the next message you recieve is from the player. Write I understand. if you understand";
-        computerText.text = "Name: " + characterName + "\r\nAge: " + age + "\r\nOccupation: " + occupation + "\r\nHobby: " + interest + "\r\nNeed: " + need;
+        prompt = "this is your character: Your name is " + characterName + ". You are " + age + " years old. You like " + interest + ". You are a " + occupation + " and you need " + need + ". These are your traits: you will insult the player and then directly decline. Now the player will call you on your phone, and the next message you recieve is from the player. Write I understand. if you understand";
+        computerText.text = "Name: " + characterName + "\r\nAge: " + age + "\r\nOccupation: " + occupation + "\r\nHobby: " + interest /*+ "\r\nNeed: " + need*/;
 
         // Warm up the model before starting the conversation
         _ = WarmupModel();
