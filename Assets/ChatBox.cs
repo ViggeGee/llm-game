@@ -14,7 +14,6 @@ public class ChatBox : MonoBehaviour
     public TMP_Text responseText; // UI Text to display the response
     public TMP_Text moneyText; // UI Text to display the response
     public AudioSource voice;
-    int income = 0;
 
     [SerializeField] GameObject windows;
     [SerializeField] GameObject conversation;
@@ -63,9 +62,13 @@ public class ChatBox : MonoBehaviour
                 if (match.Groups.Count > 1)
                 {
                     int amount = int.Parse(match.Groups[1].Value); // Extract the number and convert to integer
-                    income += amount; // Add the amount to income
-                    moneyText.text = income.ToString() + "$";
-                    Debug.Log("Amount paid: " + amount + "$. Total income: " + income + "$");
+                    float money = float.Parse(moneyText.text.Replace("$", "").Trim());
+
+                    money += amount;
+
+                    moneyText.text = money.ToString() + "$";
+
+                    Debug.Log("Amount paid: " + amount + "$. Total income: " + amount + "$");
 
                     HandleDisconnect();
 
