@@ -22,6 +22,7 @@ public class Inventory : MonoBehaviour
     public static Inventory Instance { get; private set; }
 
     [SerializeField] private string inventoryFilePath = "Assets/Inventory/Inventory.txt";
+    public string inventory;
 
     private Dictionary<string, Item> items = new Dictionary<string, Item>();
 
@@ -53,6 +54,7 @@ public class Inventory : MonoBehaviour
         try
         {
             string[] lines = File.ReadAllLines(inventoryFilePath);
+            inventory = string.Concat(lines);
 
             // Skip header line
             for (int i = 1; i < lines.Length; i++)
@@ -86,12 +88,12 @@ public class Inventory : MonoBehaviour
             StringBuilder sb = new StringBuilder();
 
             // Header
-            sb.AppendLine("Item: Quantity");
+            sb.AppendLine("You can only accept item offers from this list:");
 
             // Items
             foreach (var item in items.Values)
             {
-                sb.AppendLine($"{item.name}: {item.quantity}");
+                sb.AppendLine($"{item.quantity} {item.name}");
             }
 
             File.WriteAllText(inventoryFilePath, sb.ToString());

@@ -73,7 +73,7 @@ public class ChatBox : MonoBehaviour
 
                     Debug.Log("Amount paid: " + amount + "$. Total income: " + amount + "$");
 
-                    HandleDisconnect();
+                    //HandleDisconnect();
 
                     return;
                 }
