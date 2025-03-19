@@ -1,6 +1,8 @@
 using LLMUnity;
+using NUnit.Framework.Internal;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -12,12 +14,16 @@ public class Aigenerator : MonoBehaviour
     string needsFilePath = "Assets/Ai generator/needs.txt";
     string interestsFilePath = "Assets/Ai generator/interests.txt";
     string occupationsFilePath = "Assets/Ai generator/occupations.txt";
+    string inventoryFilePath = "Assets/Inventory/Inventory.txt";
 
     // Arrays to store character data
     string[] names;
     string[] needs;
     string[] interests;
     string[] occupations;
+    string[] items;
+    string inventory;
+
 
     // Character attributes
     [SerializeField] private string characterName;
@@ -53,6 +59,7 @@ public class Aigenerator : MonoBehaviour
         needs = LoadFromFile(needsFilePath);
         interests = LoadFromFile(interestsFilePath);
         occupations = LoadFromFile(occupationsFilePath);
+        items = LoadFromFile(inventoryFilePath);
 
         // Generate random character attributes
         age = UnityEngine.Random.Range(18, 100);
@@ -60,6 +67,8 @@ public class Aigenerator : MonoBehaviour
         need = needs[UnityEngine.Random.Range(0, needs.Length)];
         interest = interests[UnityEngine.Random.Range(0, interests.Length)];
         occupation = occupations[UnityEngine.Random.Range(0, occupations.Length)];
+        inventory = string.Concat(items);
+
 
         // Initialize the LLMCharacter if not already assigned
         if (character == null)
@@ -68,8 +77,8 @@ public class Aigenerator : MonoBehaviour
         }
 
         // Set the character prompt
-        prompt = "this is your character: Your name is " + characterName + ". You are " + age + " years old. You like " + interest + ". You are a " + occupation + " and you need " + need + ". These are your traits: you will insult the player and then directly decline. Now the player will call you on your phone, and the next message you recieve is from the player. Write I understand. if you understand";
-        computerText.text = "Name: " + characterName + "\r\nAge: " + age + "\r\nOccupation: " + occupation + "\r\nHobby: " + interest /*+ "\r\nNeed: " + need*/;
+        prompt = "Remember this information: this is your character: Your name is " + characterName + ". You are " + age + " years old. You like " + interest + ". You are a " + occupation + " and you need " + need + ". These are your traits: you are easily persuaded. lastly, this is the players inventory: " + inventory + " Now the player will call you on your phone, and the next message you recieve is from the player. Write I understand. if you understand";
+        computerText.text = "Name: " + characterName + "\r\nAge: " + age + "\r\nOccupation: " + occupation + "\r\nHobby: " + interest;
 
         // Warm up the model before starting the conversation
         _ = WarmupModel();

@@ -39,6 +39,9 @@ public class ChatBox : MonoBehaviour
         conversation.SetActive(false); // Hide the conversation screen
         Debug.Log("UI reset to default state.");
 
+        //Update gamemanager
+        GameManager.Instance.CallsLeft--;
+
     }
 
     // Handle the reply from the LLM
@@ -77,7 +80,7 @@ public class ChatBox : MonoBehaviour
             }
 
             // Regular Expression to check for the word "Decline" or "Declines" starting with *
-            string declinePattern = @"\*\s*(decline|declines)\s*[\W]*";
+            string declinePattern = @"\*\s*(hang up|hangs up)\s*[\W]*";
             Match declineMatch = Regex.Match(reply, declinePattern, RegexOptions.IgnoreCase);
 
             if (declineMatch.Success)

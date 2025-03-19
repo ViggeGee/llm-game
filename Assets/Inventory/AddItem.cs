@@ -7,8 +7,6 @@ public class AddItem : MonoBehaviour
 {
     [SerializeField] float singlePrice;
     [SerializeField] float bulkPrice;
-    [SerializeField] TextMeshProUGUI minProfit;
-    [SerializeField] TextMeshProUGUI maxProfit;
     [SerializeField] TextMeshProUGUI money;
     [SerializeField] TextMeshProUGUI itemName;
 
@@ -23,10 +21,8 @@ public class AddItem : MonoBehaviour
         {
             money.text = amount.ToString() + "$";
 
-            float minProfitf = float.Parse(minProfit.text);
-            float maxProfitf = float.Parse(maxProfit.text);
 
-            Inventory.Instance.AddItem(itemName.text, 1, minProfitf, maxProfitf);
+            Inventory.Instance.AddItem(itemName.text, 1);
         }
         else
         {
@@ -43,10 +39,7 @@ public class AddItem : MonoBehaviour
         {
             money.text = amount.ToString() + "$";
 
-            float minProfitf = float.Parse(minProfit.text);
-            float maxProfitf = float.Parse(maxProfit.text);
-
-            Inventory.Instance.AddItem(itemName.text, 10, minProfitf, maxProfitf);
+            Inventory.Instance.AddItem(itemName.text, 10);
         }
         else
         {

@@ -1,1 +1,2 @@
-Item | Quantity | MinPrice | MaxPrice | Description
+Item name: Quantity
+BOOKS: 21

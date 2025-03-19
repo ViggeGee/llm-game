@@ -9,19 +9,11 @@ public class Item
 {
     public string name;
     public int quantity;
-    public float minPrice;
-    public float maxPrice;
 
-    public Item(string name, int quantity, float minPrice, float maxPrice)
+    public Item(string name, int quantity)
     {
         this.name = name;
-        this.quantity = quantity;
-        this.minPrice = minPrice;
-        this.maxPrice = maxPrice;    }
-
-    public float GetRandomPrice()
-    {
-        return UnityEngine.Random.Range(minPrice, maxPrice);
+        this.quantity = quantity;   
     }
 }
 
@@ -73,11 +65,9 @@ public class Inventory : MonoBehaviour
                 {
                     string name = parts[0].Trim();
                     int quantity = int.Parse(parts[1].Trim());
-                    float minPrice = float.Parse(parts[2].Trim());
-                    float maxPrice = float.Parse(parts[3].Trim());
                     string description = parts[4].Trim();
 
-                    items[name] = new Item(name, quantity, minPrice, maxPrice);
+                    items[name] = new Item(name, quantity);
                 }
             }
 
@@ -96,12 +86,12 @@ public class Inventory : MonoBehaviour
             StringBuilder sb = new StringBuilder();
 
             // Header
-            sb.AppendLine("Item | Quantity | MinPrice | MaxPrice");
+            sb.AppendLine("Item: Quantity");
 
             // Items
             foreach (var item in items.Values)
             {
-                sb.AppendLine($"{item.name} | {item.quantity} | {item.minPrice} | {item.maxPrice}");
+                sb.AppendLine($"{item.name}: {item.quantity}");
             }
 
             File.WriteAllText(inventoryFilePath, sb.ToString());
@@ -120,7 +110,7 @@ public class Inventory : MonoBehaviour
 
         foreach (var item in items.Values)
         {
-            sb.AppendLine($"- {item.name}: {item.quantity} units (${item.minPrice}-${item.maxPrice} each)");
+            sb.AppendLine($"- {item.name}: {item.quantity} units");
         }
 
         return sb.ToString();
@@ -142,7 +132,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public void AddItem(string itemName, int amount, float minPrice, float maxPrice, string description = "")
+    public void AddItem(string itemName, int amount)
     {
         if (items.ContainsKey(itemName))
         {
@@ -150,7 +140,7 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            items[itemName] = new Item(itemName, amount, minPrice, maxPrice);
+            items[itemName] = new Item(itemName, amount);
         }
 
         SaveInventory();
@@ -166,12 +156,4 @@ public class Inventory : MonoBehaviour
         return itemList;
     }
 
-    public float GetRandomPrice(string itemName)
-    {
-        if (items.ContainsKey(itemName))
-        {
-            return items[itemName].GetRandomPrice();
-        }
-        return 0f;
-    }
 }
