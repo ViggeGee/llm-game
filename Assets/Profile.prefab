@@ -533,6 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a04891c97c9ef14aad3ad7d86f5b94f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: 
   characterName: 
   need: 
   interest: 
