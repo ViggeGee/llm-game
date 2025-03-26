@@ -98441,8 +98441,8 @@ MonoBehaviour:
   dontDestroyOnLoad: 1
   contextSize: 512
   batchSize: 512
-  model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
-  chatTemplate: mistral chat
+  model: Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf
+  chatTemplate: llama3 chat
   lora: 
   loraWeights: 
   flashAttention: 0
@@ -98452,7 +98452,7 @@ MonoBehaviour:
   SSLKey: 
   SSLKeyPath: 
   minContextLength: 0
-  maxContextLength: 32768
+  maxContextLength: 131072
   embeddingsOnly: 0
   embeddingLength: 4096
 --- !u!4 &940412783

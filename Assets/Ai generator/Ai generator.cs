@@ -1,8 +1,6 @@
 using LLMUnity;
-using NUnit.Framework.Internal;
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -22,8 +20,7 @@ public class Aigenerator : MonoBehaviour
     string[] interests;
     string[] occupations;
     string[] items;
-    string inventory;
-
+    public string inventory;
 
     // Character attributes
     [SerializeField] private string characterName;
@@ -39,22 +36,23 @@ public class Aigenerator : MonoBehaviour
     string prompt;
     // State management
     public bool finishedLoading = false;
-
-
     private bool isInitialized = false;
 
     private void Start()
     {
-        GeneareNewAi();
+        GenerateNewAi();
     }
 
-    public void GeneareNewAi()
+    public void GenerateNewAi()
     {
-        //weird attempt to totally memory wipe the AI, not tested
-        character.enabled = false;
-        character.enabled = true;
+        // Reset character state before creating new character
+        if (character != null)
+        {
+            character.CancelRequests();
+            character.ClearChat();
+        }
 
-        // Load character data from files
+        // Load character data
         names = LoadFromFile(namesFilePath);
         needs = LoadFromFile(needsFilePath);
         interests = LoadFromFile(interestsFilePath);
@@ -69,51 +67,52 @@ public class Aigenerator : MonoBehaviour
         occupation = occupations[UnityEngine.Random.Range(0, occupations.Length)];
         inventory = string.Concat(items);
 
-
-        // Initialize the LLMCharacter if not already assigned
-        if (character == null)
-        {
-            Debug.Log("WHOOOOPSYYYY");
-        }
-
-        // Set the character prompt
-        prompt = "Remember this information: this is your character: Your name is " + characterName + ". You are " + age + " years old. You like " + interest + ". You are a " + occupation + " and you need " + need + ". These are your traits: you are easily persuaded. lastly, this is the players inventory: " + inventory + " Now the player will call you on your phone, and the next message you recieve is from the player. Write I understand. if you understand";
+        // Update UI
         computerText.text = "Name: " + characterName + "\r\nAge: " + age + "\r\nOccupation: " + occupation + "\r\nHobby: " + interest;
 
-        // Warm up the model before starting the conversation
+        // Set character name
+        character.AIName = characterName;
+
+        // Create character prompt - identity only, not conversation reset
+        prompt = "You are " + characterName + ", age " + age + ". " +
+                 "You like " + interest + " and you work as a " + occupation + ". " +
+                 "You need " + need + " and you are easily persuaded. " +
+                 "The player is calling you on your phone. This is a new phone call. " +
+                 "Please respond as " + characterName + ".";
+
+        // Reset initialization flag
+        isInitialized = false;
+
+        // Warm up model
         _ = WarmupModel();
     }
 
     private async Task WarmupModel()
     {
-        Debug.Log("Warming up the model...");
+        Debug.Log("Warming up model for: " + characterName);
         await character.Warmup();
-        Debug.Log("Model is ready!");
         isInitialized = true;
         LoadCharacter();
     }
 
     public async void LoadCharacter()
     {
-        Debug.Log("LoadCharacter called in Aigenerator instance: " + GetInstanceID());
-
         if (!isInitialized)
         {
-            Debug.LogWarning("Model is not initialized yet. Please wait...");
+            Debug.LogWarning("Model not initialized yet");
             return;
         }
 
-        Debug.Log("Loading character...");
         finishedLoading = false;
 
         try
         {
+            // Set the character prompt
             await character.Chat(prompt, WaitForCharacter);
-            character.AIName = characterName;
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
-            Debug.LogError("Error during character loading: " + ex.Message);
+            Debug.LogError("Error loading character: " + ex.Message);
             finishedLoading = false;
         }
     }
@@ -125,11 +124,11 @@ public class Aigenerator : MonoBehaviour
         if (!string.IsNullOrEmpty(reply))
         {
             finishedLoading = true;
-            Debug.Log("Character loading complete.");
+            Debug.Log("Character loaded: " + characterName);
         }
         else
         {
-            Debug.LogWarning("Empty reply received from AI.");
+            Debug.LogWarning("Empty reply from AI");
         }
     }
 
@@ -150,12 +149,12 @@ public class Aigenerator : MonoBehaviour
     {
         if (character != null)
         {
-            character.CancelRequests(); // Cancel any pending requests
-            character.ClearChat(); // Clear the chat history
-            character.enabled = false; // Disable the LLMCharacter component
+            character.CancelRequests();
+            character.ClearChat();
+            character.enabled = false;
         }
-        Debug.Log("LLM resources cleaned up.");
     }
+
     private void OnApplicationQuit()
     {
         Cleanup();
