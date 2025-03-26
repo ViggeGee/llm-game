@@ -11,8 +11,6 @@ public class ChatBox : MonoBehaviour
 {
     public LLMCharacter llmCharacter;
     public TMP_InputField userInputField; // UI Input Field for the user to type their message
-
-    [SerializeField] public InventoryRAG inventoryRAG;
     public TMP_Text responseText; // UI Text to display the response
     public TMP_Text moneyText; // UI Text to display the response
     public AudioSource voice;
@@ -108,18 +106,15 @@ public class ChatBox : MonoBehaviour
     }
 
     // Called when the user submits a message (presses Enter or submits the input)
-    async void OnSubmitMessage(string inputMessage)
+    void OnSubmitMessage(string inputMessage)
     {
         if (string.IsNullOrEmpty(inputMessage)) return; // Ignore empty messages
 
         // Optionally: You can display the user’s message in the UI
         responseText.text = "You said: " + inputMessage;
 
-        string enhancedPrompt = await inventoryRAG.EnhancePromptWithInventory(inputMessage);
-
-
         // Send the user input to the LLM
-        _ = llmCharacter.Chat(enhancedPrompt, HandleReply);
+        _ = llmCharacter.Chat(inputMessage, HandleReply);
 
         // Optionally: Clear the input field after sending the message
         userInputField.text = "";
